@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Portal - Nirmal Dhara</title>
+    <link rel="stylesheet" href="ngo_portal.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="portal-header">
+        <div class="logo">Nirmal Dhara</div>
+        <nav class="header-nav">
+            <span class="header-heading">NGO & Partner Portal</span>
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </nav>
+    </header>
+
+    <div class="portal-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Portal Menu</h2>
+                <p>Select a section to begin.</p>
+            </div>
+            <nav class="analysis-menu">
+                <ul>
+                    <li data-analysis="user-reports" class="active">User Reports</li>
+                    <li data-analysis="my-profile">My Profile & Posts</li>
+                    <li data-analysis="expert-reports">Expert Reports</li>
+                    <hr class="sidebar-divider">
+                    <li data-analysis="fecal_coliform">Fecal Coliform</li>
+                    <li data-analysis="flow">Ganga Flow</li>
+                    <li data-analysis="nitrate">Nitrate Presence</li>
+                    <li data-analysis="rainfall">Rainfall</li>
+                    <li data-analysis="temperature">Water Temperature</li>
+                    <li data-analysis="level">Water Level</li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="portal-main-content">
+            <div id="analysis-results" class="hidden">
+                <h2 id="analysis-title" class="section-title">Fecal Coliform Analysis</h2>
+                <div class="card" style="height: 350px; margin-bottom: 1.5rem;">
+                    <canvas id="bar-chart"></canvas>
+                </div>
+                <div class="bottom-grid">
+                    <div class="card">
+                        <div id="map"></div>
+                    </div>
+                    <div class="card">
+                        <canvas id="pie-chart"></canvas>
+                    </div>
+                </div>
+                <div class="predictions-grid">
+                    <div class="prediction-card card">
+                        <h4 id="day1-date">Tomorrow</h4>
+                        <p id="day1-prediction">...</p>
+                        <div id="day1-alert" class="alert hidden"><strong>Status:</strong> <span id="day1-alert-text"></span></div>
+                    </div>
+                    <div class="prediction-card card">
+                        <h4 id="day2-date">Day 2</h4>
+                        <p id="day2-prediction">...</p>
+                        <div id="day2-alert" class="alert hidden"><strong>Status:</strong> <span id="day2-alert-text"></span></div>
+                    </div>
+                    <div class="prediction-card card">
+                        <h4 id="day3-date">Day 3</h4>
+                        <p id="day3-prediction">...</p>
+                        <div id="day3-alert" class="alert hidden"><strong>Status:</strong> <span id="day3-alert-text"></span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="user-reports-section">
+                <h2 class="section-title">Community Reports Feed</h2>
+                <p class="section-subtitle">Review and act on reports submitted by community members.</p>
+                <div class="report-feed-grid">
+                    <div class="report-card card">
+                        <img src="https://placehold.co/400x225/e0eef7/0b1a2a?text=User+Photo" alt="User submitted photo of waste">
+                        <div class="report-content">
+                            <p class="report-description">"Large pile of plastic bags and bottles dumped near Assi Ghat this morning."</p>
+                            <div class="report-meta">
+                                <span>📍 Assi Ghat, Varanasi</span>
+                                <span>📅 Sep 30, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="report-card card">
+                        <img src="https://placehold.co/400x225/e0eef7/0b1a2a?text=User+Photo" alt="User submitted photo of discolored water">
+                        <div class="report-content">
+                            <p class="report-description">"The water near Kedar Ghat looks unusually dark and smells strange. Possible sewage leak."</p>
+                            <div class="report-meta">
+                                <span>📍 Kedar Ghat, Varanasi</span>
+                                <span>📅 Sep 29, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="my-profile-section" class="hidden">
+                <h2 class="section-title">My Profile & Posts</h2>
+                <div class="card">
+                    <h3>Create a New Post</h3>
+                    <p>Share your initiatives, events, or findings with the community.</p>
+                    <form id="create-post-form" class="post-form">
+                        <div class="form-group">
+                            <label for="post-title">Post Title</label>
+                            <input type="text" id="post-title" required placeholder="e.g., Weekly Cleanup Drive">
+                        </div>
+                        <div class="form-group">
+                            <label for="post-content">Content</label>
+                            <textarea id="post-content" rows="5" required placeholder="Describe your event or initiative..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Publish Post</button>
+                    </form>
+                </div>
+                <div class="my-posts-section">
+                    <h3 class="section-subtitle">Your Published Posts</h3>
+                    <div id="my-posts-container" class="post-feed-grid">
+                        </div>
+                </div>
+            </div>
+
+            <div id="expert-reports-section" class="hidden">
+                <h2 class="section-title">Expert Reports & Analysis</h2>
+                 <div class="expert-posts-grid">
+                    <div class="expert-post-card card">
+                        <h4 class="card-title">Validating Community-Sourced Pollution Reports</h4>
+                        <div class="author-info"><img src="https://placehold.co/30x30/005f99/ffffff?text=RP" alt="R. Patel profile picture"><span>R. Patel, Data Scientist</span></div>
+                        <p>Our latest algorithm successfully verified 85% of photo submissions tagged "industrial waste"...</p>
+                        <a href="#" class="read-more-link">Read More →</a>
+                    </div>
+                    <div class="expert-post-card card">
+                        <h4 class="card-title">Microplastic Hotspots Identified near Kanpur</h4>
+                         <div class="author-info"><img src="https://placehold.co/30x30/005f99/ffffff?text=SS" alt="S. Singh profile picture"><span>Dr. S. Singh, Environmental Chemist</span></div>
+                        <p>Analysis of recent water samples shows alarming concentrations of microplastics downstream from Kanpur...</p>
+                        <a href="#" class="read-more-link">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="ngo_portal.js"></script>
+</body>
+</html>

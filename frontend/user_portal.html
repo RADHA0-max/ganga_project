@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Portal - Nirmal Dhara</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="user_portal.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+<body>
+    <header class="portal-header">
+        <div class="logo">Nirmal Dhara</div>
+        <nav class="header-nav">
+            <span class="header-heading">Community Portal</span>
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </nav>
+    </header>
+
+    <div class="portal-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Varanasi Analysis</h2>
+                <p>Data last updated: Sep 30, 2025</p>
+            </div>
+            <nav class="analysis-menu">
+                <ul>
+                    <li data-analysis="fecal_coliform" class="active">Fecal Coliform</li>
+                    <li data-analysis="bod">BOD (Oxygen Demand)</li>
+                    <li data-analysis="nitrate">Nitrate Levels</li>
+                    <li data-analysis="flow">River Flow</li>
+                    <hr class="sidebar-divider">
+                    <li data-section="ngo-reports">NGO Activity Feed</li>
+                    <li data-section="report-waste">Report Waste</li>
+                    <li data-section="more-info">More Info</li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <div id="analysis-results-section" class="portal-section">
+                <h2 class="section-title" id="analysis-title"></h2>
+                
+                <div class="analysis-grid">
+                    <div class="card chart-card">
+                        <canvas id="bar-chart"></canvas>
+                    </div>
+
+                    <div class="card chart-card">
+                        <canvas id="pie-chart"></canvas>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">3-Day Forecast</h3>
+                <div class="prediction-grid">
+                    <div class="card prediction-card">
+                        <p class="prediction-date" id="day1-date">Today</p>
+                        <p class="prediction-text" id="day1-prediction"></p>
+                        <div class="alert hidden" id="day1-alert">
+                            <span id="day1-alert-text"></span>
+                        </div>
+                    </div>
+                    <div class="card prediction-card">
+                        <p class="prediction-date" id="day2-date">Tomorrow</p>
+                        <p class="prediction-text" id="day2-prediction"></p>
+                         <div class="alert hidden" id="day2-alert">
+                            <span id="day2-alert-text"></span>
+                        </div>
+                    </div>
+                    <div class="card prediction-card">
+                        <p class="prediction-date" id="day3-date">Day After</p>
+                        <p class="prediction-text" id="day3-prediction"></p>
+                         <div class="alert hidden" id="day3-alert">
+                            <span id="day3-alert-text"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Pollution Hotspot Map</h3>
+                 <div id="map" class="card">
+                     </div>
+            </div>
+            
+            <div id="report-waste-section" class="portal-section hidden">
+                <h2 class="section-title">Report Waste or Pollution</h2>
+                <div class="card report-form-card">
+                    <form id="report-waste-form">
+                        <div class="form-group">
+                            <label for="report-type">Type of Pollution</label>
+                            <select id="report-type" name="report-type" required>
+                                <option value="" disabled selected>Select type...</option>
+                                <option value="plastic">Plastic Waste</option>
+                                <option value="sewage">Raw Sewage Discharge</option>
+                                <option value="industrial">Industrial Waste/Foam</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="report-description">Description of Incident</label>
+                            <textarea id="report-description" name="report-description" rows="4" placeholder="Describe what you saw, the location, and the estimated severity. This report will go directly to the NEO (NGOs) for action." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="report-photo">Upload Photo (Optional)</label>
+                            <input type="file" id="report-photo" name="report-photo" accept="image/*">
+                        </div>
+                        <button type="submit" class="cta-button">Submit Report</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="ngo-reports-section" class="portal-section hidden">
+                <h2 class="section-title">NGO Activity Feed</h2>
+                <p>See what our NGO partners are doing in your city and how they are responding to reports.</p>
+                <div class="post-feed-grid">
+                    <div class="post-card card">
+                        <img src="https://placehold.co/300x200/005f99/ffffff?text=Cleanup+Drive" alt="NGO cleanup drive photo">
+                        <div class="post-content">
+                            <h4>Clean Ganga Initiative</h4>
+                            <p>Our team successfully removed over 200kg of plastic waste from Assi Ghat today! A big thank you to all the volunteers.</p>
+                            <span class="post-date">Sep 25, 2025</span>
+                        </div>
+                    </div>
+                    <div class="post-card card">
+                        <img src="https://placehold.co/300x200/005f99/ffffff?text=Community+Event" alt="NGO community awareness event">
+                        <div class="post-content">
+                            <h4>River Savers Foundation</h4>
+                            <p>Our awareness campaign in local schools was a huge success! Educating the next generation is fundamental to long-term change.</p>
+                            <span class="post-date">Sep 10, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="more-info-section" class="portal-section hidden">
+                <h2 class="section-title">In-Depth Information</h2>
+                <p>Here you can find more detail on the water quality parameters and their significance.</p>
+                <div class="info-grid">
+                    <div class="card">
+                        <h4 class="card-title">Parameter Guidelines</h4>
+                        <p>Detailed breakdown of national water quality standards for bathing and drinking.</p>
+                    </div>
+                    <div id="expert-report-link" class="card premium-locked">
+                        <h4 class="card-title">Expert Scientific Reports 🔒</h4>
+                        <p>Unlock access to peer-reviewed research and in-depth policy briefs from leading experts.</p>
+                        <button class="cta-button subscribe-btn">Subscribe to Premium</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="premium-modal-overlay" class="modal-overlay hidden"></div>
+    <div id="premium-modal" class="premium-modal-content hidden">
+        <span id="close-premium-modal" class="close-btn">&times;</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="premium-icon"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <h3>Unlock Expert Reports</h3>
+        <p>Subscribe to Nirmal Dhara Premium for full access to expert-validated scientific data, detailed policy analysis, and exclusive researcher commentary.</p>
+        <button class="cta-button">Go Premium Now</button>
+    </div>
+    
+    <script src="user_portal.js"></script>
+</body>
+</html>

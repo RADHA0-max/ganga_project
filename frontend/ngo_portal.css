@@ -1,0 +1,278 @@
+/* ---- Google Font Import ---- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Lato:wght@400;700&display=swap');
+
+/* ---- CSS Variables & Global Styles ---- */
+:root {
+    --bg-light: #f0f8ff; 
+    --bg-sidebar: #e0eef7; 
+    --primary-blue: #005f99; 
+    --bg-white: #ffffff;
+    --accent-blue: #007bff; 
+    --text-dark: #0b1a2a; 
+    --text-secondary: #5a6d7e; 
+    --border-color: #d1e2ec;
+    --shadow-color: rgba(0, 95, 153, 0.1); 
+    --accent-warning: #ffc107; 
+    --accent-danger: #dc3545; 
+    --accent-safe: #28a745;
+}
+body { 
+    margin: 0; 
+    font-family: 'Lato', sans-serif; 
+    color: var(--text-dark); 
+    background: var(--bg-light); 
+    line-height: 1.6; 
+}
+.hidden { 
+    display: none !important; 
+}
+
+/* ---- Reusable Components ---- */
+.card { 
+    background: var(--bg-white); 
+    border: 1px solid var(--border-color); 
+    border-radius: 12px; 
+    padding: 1.5rem; 
+    box-shadow: 0 4px 12px var(--shadow-color); 
+}
+.section-title { 
+    font-family: 'Poppins', sans-serif; 
+    font-size: 1.8rem; 
+    color: var(--primary-blue); 
+    margin-top: 0; 
+    margin-bottom: 0.5rem; 
+}
+.section-subtitle { 
+    font-size: 1rem; 
+    color: var(--text-secondary); 
+    margin-top: 0; 
+    margin-bottom: 1.5rem; 
+}
+
+/* ---- Main Layout ---- */
+.portal-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 1rem 2rem; 
+    background: var(--bg-white); 
+    border-bottom: 1px solid var(--border-color); 
+}
+.logo { 
+    font-family: 'Poppins', sans-serif; 
+    font-size: 1.5rem; 
+    font-weight: 700; 
+    color: var(--primary-blue); 
+}
+.header-nav { 
+    display: flex; 
+    align-items: center; 
+    gap: 1.5rem; 
+}
+.back-link { 
+    text-decoration: none; 
+    color: var(--accent-blue); 
+    font-weight: 700; 
+}
+.portal-container { 
+    display: flex; 
+}
+.sidebar { 
+    width: 280px; 
+    background: var(--bg-sidebar); 
+    border-right: 1px solid var(--border-color); 
+    min-height: calc(100vh - 70px); 
+    padding: 1.5rem; 
+}
+.sidebar-header h2 { 
+    font-family: 'Poppins', sans-serif; 
+    color: var(--primary-blue); 
+    margin: 0 0 0.5rem 0; 
+    font-size: 1.4rem; 
+}
+.analysis-menu ul { 
+    list-style: none; 
+    padding: 0; 
+    margin: 1.5rem 0 0 0; 
+}
+.analysis-menu li { 
+    padding: 0.8rem 1rem; 
+    margin-bottom: 0.5rem; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: background-color 0.3s, color 0.3s; 
+    font-weight: 500; 
+}
+.analysis-menu li:hover, .analysis-menu li.active { 
+    background: var(--primary-blue); 
+    color: white; 
+}
+.sidebar-divider { 
+    border: 0; 
+    height: 1px; 
+    background-color: var(--border-color); 
+    margin: 1rem 0; 
+}
+.portal-main-content { 
+    flex: 1; 
+    padding: 2rem; 
+    overflow-y: auto; 
+}
+
+/* ---- NEW: Bottom Grid for Map and Pie Chart ---- */
+.bottom-grid { 
+    display: grid; 
+    grid-template-columns: 2fr 1fr; 
+    gap: 1.5rem; 
+    margin-bottom: 1.5rem; 
+}
+#map { 
+    height: 300px; 
+    width: 100%; 
+    border-radius: 8px; 
+}
+
+/* ---- Predictions Grid ---- */
+.predictions-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 1.5rem; 
+    margin-top: 1rem; 
+}
+.prediction-card h4 { 
+    font-family: 'Poppins', sans-serif; 
+    margin: 0 0 0.5rem 0; 
+    color: var(--primary-blue); 
+}
+.alert { 
+    display: flex; 
+    align-items: center; 
+    gap: 0.75rem; 
+    margin-top: 1rem; 
+    padding: 0.75rem; 
+    border-radius: 8px; 
+    font-weight: 700; 
+}
+.alert.warning { 
+    background-color: #fff3cd; 
+    color: #664d03; 
+    border-left: 5px solid #ffc107; 
+}
+.alert.danger { 
+    background-color: #f8d7da; 
+    color: #58151c; 
+    border-left: 5px solid #dc3545; 
+}
+.alert.safe { 
+    background-color: #d1e7dd; 
+    color: #0a3622; 
+    border-left: 5px solid #28a745; 
+}
+
+/* ---- NEW: Form Styles ---- */
+.post-form .form-group { 
+    margin-bottom: 1rem; 
+}
+.post-form label { 
+    display: block; 
+    font-weight: 700; 
+    margin-bottom: 0.5rem; 
+}
+.post-form input, .post-form textarea { 
+    width: 100%; 
+    padding: 0.75rem; 
+    border: 1px solid var(--border-color); 
+    border-radius: 8px; 
+    font-family: 'Lato', sans-serif; 
+    font-size: 1rem; 
+    box-sizing: border-box; 
+}
+.submit-btn { 
+    background: var(--accent-blue); 
+    color: white; 
+    border: none; 
+    padding: 0.8rem 1.5rem; 
+    border-radius: 8px; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+.submit-btn:hover { 
+    background: var(--primary-blue); 
+}
+
+/* ---- NEW: Feed/Post Styles ---- */
+.my-posts-section { 
+    margin-top: 2rem; 
+}
+.report-feed-grid, .post-feed-grid { 
+    display: grid; 
+    grid-template-columns: 1fr; 
+    gap: 1.5rem; 
+}
+.report-card, .post-card { 
+    display: flex; 
+    flex-direction: column; 
+}
+.report-card img { 
+    width: 100%; 
+    height: 200px; 
+    object-fit: cover; 
+    border-radius: 8px 8px 0 0; 
+}
+.report-content { 
+    padding: 1rem; 
+}
+.report-description { 
+    margin: 0 0 1rem 0; 
+}
+.report-meta { 
+    font-size: 0.85rem; 
+    color: var(--text-secondary); 
+    display: flex; 
+    justify-content: space-between; 
+}
+.expert-posts-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+    gap: 1.5rem; 
+}
+.expert-post-card .author-info { 
+    display: flex; 
+    align-items: center; 
+    gap: 0.5rem; 
+    font-size: 0.9rem; 
+    margin-bottom: 0.5rem; 
+}
+.expert-post-card .author-info img { 
+    width: 30px; 
+    height: 30px; 
+    border-radius: 50%; 
+}
+.read-more-link { 
+    font-weight: 700; 
+    color: var(--accent-blue); 
+    text-decoration: none; 
+}
+
+/* --- Map Legend Styles --- */
+.info.legend {
+    padding: 8px 12px;
+    font-family: 'Lato', sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    line-height: 24px;
+    color: #333;
+    font-weight: bold;
+}
+.legend i {
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 8px;
+    opacity: 1;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.2);
+}

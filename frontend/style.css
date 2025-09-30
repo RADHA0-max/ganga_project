@@ -1,0 +1,270 @@
+/* ---- Google Font Import ---- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Lato&display=swap');
+
+/* ---- General Body & Fonts ---- */
+body {
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    color: white;
+    background-color: #003366; /* Fallback background */
+    overflow-x: hidden;
+}
+
+/* ---- Animated Background Container ---- */
+.background-waves {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    background: linear-gradient(135deg, #003366, #87CEEB);
+    overflow: hidden; /* Hide bubbles that go outside the screen */
+}
+
+/* ---- Header & Navigation ---- */
+header {
+    position: sticky;
+    top: 0;
+    padding: 1rem 5%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 10;
+}
+
+nav { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 600; }
+nav ul { list-style: none; display: flex; margin: 0; padding: 0; gap: 2rem; }
+nav a { text-decoration: none; color: white; font-weight: bold; transition: color 0.3s ease; }
+nav a:hover { color: #87CEEB; }
+
+/* ---- Hero Section ---- */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    text-align: center;
+    padding: 0 2rem;
+}
+
+.hero-section h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-section p { font-size: 1.2rem; max-width: 600px; margin-bottom: 2rem; }
+.cta-button {
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #003366;
+    background-color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.cta-button:hover { transform: scale(1.05); background-color: #f0f0f0; }
+
+/* ---- Modal & Overlay Styles ---- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 51, 102, 0.6);
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    width: 90%;
+    max-width: 600px; /* Default max-width */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    z-index: 101;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    text-align: center; /* Center align text in modals */
+}
+
+.modal.active, .modal-overlay.active { opacity: 1; pointer-events: auto; }
+.modal.active { transform: translate(-50%, -50%) scale(1); }
+.modal h2 { font-family: 'Poppins', sans-serif; margin-top: 0; color: #FFFFFF; }
+.modal p, .modal li { font-family: 'Lato', sans-serif; line-height: 1.6; color: #f0f0f0; }
+.modal ul { list-style: none; padding: 0; text-align: left; }
+.close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: white; cursor: pointer; transition: transform 0.2s ease; }
+.close-btn:hover { transform: scale(1.2); }
+
+/* ---- Bubble Animation Styles ---- */
+.bubbles span {
+    position: absolute;
+    bottom: -100px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    animation: bubble-rise 25s linear infinite;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.25);
+}
+.bubbles span:nth-child(1) { left: 10%; animation-duration: 22s; width: 20px; height: 20px; }
+.bubbles span:nth-child(2) { left: 20%; animation-duration: 18s; animation-delay: 2s; width: 45px; height: 45px; }
+.bubbles span:nth-child(3) { left: 35%; animation-duration: 28s; animation-delay: 4s; }
+.bubbles span:nth-child(4) { left: 50%; animation-duration: 16s; width: 15px; height: 15px; }
+.bubbles span:nth-child(5) { left: 55%; animation-duration: 20s; animation-delay: 1s; }
+.bubbles span:nth-child(6) { left: 65%; animation-duration: 30s; width: 50px; height: 50px; }
+.bubbles span:nth-child(7) { left: 75%; animation-duration: 17s; animation-delay: 3s; width: 25px; height: 25px; }
+.bubbles span:nth-child(8) { left: 85%; animation-duration: 24s; }
+.bubbles span:nth-child(9) { left: 90%; animation-duration: 19s; animation-delay: 5s; width: 35px; height: 35px; }
+.bubbles span:nth-child(10) { left: 40%; animation-duration: 26s; }
+.bubbles span:nth-child(11) { left: 80%; animation-duration: 21s; animation-delay: 1.5s; width: 30px; height: 30px; }
+.bubbles span:nth-child(12) { left: 15%; animation-duration: 29s; animation-delay: 6s; width: 40px; height: 40px; }
+.bubbles span:nth-child(13) { left: 5%; animation-duration: 17s; animation-delay: 8s; width: 18px; height: 18px; }
+.bubbles span:nth-child(14) { left: 28%; animation-duration: 23s; }
+.bubbles span:nth-child(15) { left: 48%; animation-duration: 32s; animation-delay: 3s; width: 55px; height: 55px; }
+.bubbles span:nth-child(16) { left: 70%; animation-duration: 18s; animation-delay: 7s; }
+.bubbles span:nth-child(17) { left: 95%; animation-duration: 25s; width: 22px; height: 22px; }
+.bubbles span:nth-child(18) { left: 60%; animation-duration: 20s; animation-delay: 4.5s; }
+.bubbles span:nth-child(19) { left: 30%; animation-duration: 27s; width: 48px; height: 48px; }
+.bubbles span:nth-child(20) { left: 78%; animation-duration: 22s; animation-delay: 9s; width: 12px; height: 12px; }
+
+@keyframes bubble-rise {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-120vh) scale(0.5); opacity: 0; }
+}
+
+/* ---- Role Selection Portal Styles ---- */
+#role-portal-modal {
+    max-width: 900px; /* Wider modal for the cards */
+}
+
+.portal-subtitle {
+    margin-top: -10px;
+    margin-bottom: 30px;
+    font-size: 1rem;
+    color: #cce7ff;
+}
+
+.role-selection-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    width: 100%;
+    flex-wrap: wrap; /* For responsiveness on smaller screens */
+}
+
+.role-card {
+    flex-basis: 30%;
+    min-width: 220px; /* Ensure cards don't get too squished */
+    padding: 25px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.role-card:hover {
+    transform: translateY(-10px);
+    border-color: #FFFFFF;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.role-card h3 {
+    font-family: 'Poppins', sans-serif;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+}
+
+.role-card p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #e0e0e0;
+}
+
+/* ---- Authentication Modal Styles ---- */
+#auth-modal {
+    max-width: 450px;
+}
+
+.auth-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.input-group {
+    width: 100%;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    box-sizing: border-box; /* Important for padding */
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #FFFFFF;
+    box-shadow: 0 0 10px rgba(135, 206, 235, 0.5);
+}
+
+#auth-button {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.auth-toggle-link {
+    font-size: 0.9rem;
+    color: #cce7ff;
+}
+
+.auth-toggle-link a {
+    color: #FFFFFF;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.auth-toggle-link a:hover {
+    text-decoration: underline;
+}
+
+/* ---- Message Modal Styles ---- */
+#message-modal {
+    max-width: 400px;
+}
+
+#message-ok-btn {
+    margin-top: 1.5rem;
+    padding: 0.8rem 2rem;
+}
+

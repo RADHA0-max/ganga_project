@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert Portal - Nirmal Dhara</title>
+    <link rel="stylesheet" href="expert_portal.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="portal-header">
+        <div class="logo">Nirmal Dhara</div>
+        <nav class="header-nav">
+            <span class="header-heading">Expert & Researcher Portal</span>
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </nav>
+    </header>
+
+    <div class="portal-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Portal Menu</h2>
+                <p>Select a section to begin.</p>
+            </div>
+            <nav class="analysis-menu">
+                <ul>
+                    <li data-analysis="my-dashboard" class="active">My Dashboard</li>
+                    <hr class="sidebar-divider">
+                    <li data-analysis="fecal_coliform">Fecal Coliform</li>
+                    <li data-analysis="flow">Ganga Flow</li>
+                    <li data-analysis="nitrate">Nitrate Presence</li>
+                    <li data-analysis="rainfall">Rainfall</li>
+                    <li data-analysis="temperature">Water Temperature</li>
+                    <li data-analysis="level">Water Level</li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="portal-main-content">
+            <div id="my-dashboard-section">
+                <h2 class="section-title">Expert Dashboard</h2>
+                <p class="section-subtitle">Manage data, review reports, and contribute your analysis.</p>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card card dashboard-button" data-section="create-report-section"><h3>Create Report</h3><p>Publish a new analysis or report for the community and partners.</p></div>
+                    <div class="dashboard-card card dashboard-button" data-section="update-data-section"><h3>Update Data</h3><p>Override AI data with your latest findings for any metric.</p></div>
+                    <div class="dashboard-card card dashboard-button" data-section="user-reports-feed-section"><h3>View User Feed</h3><p>Review and validate pollution reports submitted by the community.</p></div>
+                    <div class="dashboard-card card dashboard-button" data-section="ngo-posts-feed-section"><h3>View NGO Feed</h3><p>See the latest initiatives and posts from our partner NGOs.</p></div>
+                </div>
+            </div>
+
+            <div id="analysis-results" class="hidden">
+                <h2 id="analysis-title" class="section-title"></h2>
+                <div class="card" style="height: 350px; margin-bottom: 1.5rem;">
+                    <canvas id="bar-chart"></canvas>
+                </div>
+                <div class="bottom-grid">
+                    <div class="card">
+                        <div id="map"></div>
+                    </div>
+                    <div class="card">
+                        <canvas id="pie-chart"></canvas>
+                    </div>
+                </div>
+                <div class="predictions-grid">
+                    <div class="prediction-card card"><h4 id="day1-date"></h4><p id="day1-prediction"></p><div id="day1-alert" class="alert hidden"><strong>Status:</strong> <span id="day1-alert-text"></span></div></div>
+                    <div class="prediction-card card"><h4 id="day2-date"></h4><p id="day2-prediction"></p><div id="day2-alert" class="alert hidden"><strong>Status:</strong> <span id="day2-alert-text"></span></div></div>
+                    <div class="prediction-card card"><h4 id="day3-date"></h4><p id="day3-prediction"></p><div id="day3-alert" class="alert hidden"><strong>Status:</strong> <span id="day3-alert-text"></span></div></div>
+                </div>
+            </div>
+
+            <div id="create-report-section" class="hidden">
+                <h2 class="section-title">Create a New Report</h2>
+                <div class="card"><form id="create-report-form"><div class="form-group"><label for="report-title">Report Title</label><input type="text" id="report-title" required placeholder="e.g., Analysis of Monsoon Impact"></div><div class="form-group"><label for="report-content">Content</label><textarea id="report-content" rows="8" required placeholder="Write your detailed analysis here..."></textarea></div><div class="form-group"><label for="report-attachment">Attach Files (Optional)</label><input type="file" id="report-attachment"></div><button type="submit" class="submit-btn">Publish Report</button></form></div>
+            </div>
+
+            <div id="update-data-section" class="hidden">
+                <h2 class="section-title">Update Daily Data</h2>
+                <p class="section-subtitle">Enter data for the last 10 days to update the charts. Leave fields blank for days with no new data.</p>
+                <div class="card"><form id="update-data-form"><div id="daily-data-form-container"></div><button type="submit" class="submit-btn">Update All Data</button></form></div>
+            </div>
+
+            <div id="user-reports-feed-section" class="hidden">
+                <h2 class="section-title">Community Reports Feed</h2>
+                <div class="report-feed-grid">
+                    <div class="report-card card"><img src="https://placehold.co/400x225/e0eef7/0b1a2a?text=User+Photo" alt="User submitted photo"><div class="report-content"><p class="report-description">"Large pile of plastic bags and bottles dumped near Assi Ghat this morning."</p><div class="report-meta"><span>📍 Assi Ghat, Varanasi</span><span>📅 Sep 30, 2025</span></div><div class="expert-actions"><button class="validate-btn">Validate Report</button><button class="reject-btn">Mark as Invalid</button></div></div></div>
+                    <div class="report-card card"><img src="https://placehold.co/400x225/e0eef7/0b1a2a?text=User+Photo" alt="User submitted photo"><div class="report-content"><p class="report-description">"The water near Kedar Ghat looks unusually dark and smells strange. Possible sewage leak."</p><div class="report-meta"><span>📍 Kedar Ghat, Varanasi</span><span>📅 Sep 29, 2025</span></div><div class="expert-actions"><button class="validate-btn">Validate Report</button><button class="reject-btn">Mark as Invalid</button></div></div></div>
+                </div>
+            </div>
+
+            <div id="ngo-posts-feed-section" class="hidden">
+                <h2 class="section-title">NGO Partner Posts</h2>
+                <div class="post-feed-grid">
+                    <div class="post-card card"><img src="https://placehold.co/300x200/005f99/ffffff?text=Cleanup+Drive" alt="NGO cleanup drive photo"><div class="post-content"><h4>Clean Ganga Initiative</h4><p>Our team successfully removed over 200kg of plastic waste from Tulsi Ghat today! A big thank you to all the volunteers.</p><span class="post-date">Sep 25, 2025</span><div class="expert-comment-section"><textarea placeholder="Add a professional comment..."></textarea><button class="submit-btn">Comment</button></div></div></div>
+                    <div class="post-card card"><img src="https://placehold.co/300x200/005f99/ffffff?text=Water+Testing" alt="NGO water testing photo"><div class="post-content"><h4>Ganga Water Watch</h4><p>Weekly water sample results are in. We've noted a slight increase in turbidity levels post-monsoon. Full report on our website.</p><span class="post-date">Sep 22, 2025</span><div class="expert-comment-section"><textarea placeholder="Add a professional comment..."></textarea><button class="submit-btn">Comment</button></div></div></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="expert_portal.js"></script>
+</body>
+</html>

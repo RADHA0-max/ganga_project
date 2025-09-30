@@ -1,0 +1,253 @@
+/* ---- Google Font Import ---- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Lato:wght@400;700&display=swap');
+
+/* ---- CSS Variables & Global Styles ---- */
+:root {
+    --bg-light: #f0f8ff; --bg-sidebar: #e0eef7; --primary-blue: #005f99; --bg-white: #ffffff;
+    --accent-blue: #007bff; --text-dark: #0b1a2a; --text-secondary: #5a6d7e; --border-color: #d1e2ec;
+    --shadow-color: rgba(0, 95, 153, 0.1); --accent-warning: #ffc107; --accent-danger: #dc3545; --accent-safe: #28a745;
+}
+body { margin: 0; font-family: 'Lato', sans-serif; color: var(--text-dark); background: var(--bg-light); line-height: 1.6; }
+.hidden { display: none !important; }
+
+/* ---- Reusable Card Style ---- */
+.card { 
+    background: var(--bg-white); 
+    border: 1px solid var(--border-color); 
+    border-radius: 12px; 
+    padding: 1.5rem; 
+    box-shadow: 0 4px 12px var(--shadow-color); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+.cta-button { 
+    background: var(--accent-blue); 
+    color: white; 
+    border: none; 
+    padding: 0.8rem 1.5rem; 
+    border-radius: 8px; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+    display: inline-block;
+}
+.cta-button:hover { background: var(--primary-blue); }
+
+/* ---- Alerts & Warnings (Used in Prediction Cards) ---- */
+.alert {
+    padding: 0.5rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    display: block;
+}
+.warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+.danger {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.safe {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* ---- Portal Layout ---- */
+.portal-header { 
+    background: var(--primary-blue); 
+    color: white; 
+    padding: 1rem 5%; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+}
+.logo { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700; }
+.header-heading { font-size: 1.1rem; font-weight: 500; }
+.back-link { color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8; transition: opacity 0.3s; }
+.back-link:hover { opacity: 1; }
+
+.portal-container { 
+    display: flex; 
+    min-height: calc(100vh - 60px); 
+}
+.sidebar { 
+    width: 280px; 
+    background: var(--bg-sidebar); 
+    padding: 1.5rem; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+.analysis-menu li { 
+    padding: 10px 15px; 
+    cursor: pointer; 
+    border-radius: 8px; 
+    margin-bottom: 8px; 
+    transition: background-color 0.2s, color 0.2s; 
+    font-weight: 500;
+}
+.analysis-menu li.active { background: var(--primary-blue); color: white; }
+
+.content { 
+    flex-grow: 1; 
+    padding: 2rem;
+}
+.section-title { font-family: 'Poppins', sans-serif; color: var(--primary-blue); margin-top: 0; margin-bottom: 1.5rem; }
+.subsection-title { font-family: 'Poppins', sans-serif; color: var(--text-dark); margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.25rem; }
+
+/* ---- Analysis Section Styles (Charts/Graphs & Predictions) ---- */
+.analysis-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Bar chart wide, Pie chart narrow */
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+.chart-card {
+    height: 350px; /* Fixed height for Chart.js canvas */
+}
+#map {
+    height: 400px;
+}
+.prediction-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+.prediction-card {
+    text-align: center;
+    padding: 1rem;
+}
+
+/* ---- Waste Report Form Styles ---- */
+.report-form-card {
+    padding: 2rem;
+    max-width: 600px;
+}
+#report-waste-form .form-group {
+    margin-bottom: 1.5rem;
+}
+#report-waste-form label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--primary-blue);
+}
+#report-waste-form input[type="file"],
+#report-waste-form select,
+#report-waste-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+#report-waste-form textarea {
+    resize: vertical;
+}
+
+/* ---- NGO Feed Styles ---- */
+.post-feed-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 2rem; 
+}
+.post-card { padding: 0; } 
+.post-card img { 
+    width: 100%; 
+    height: 180px; 
+    object-fit: cover; 
+    border-radius: 12px 12px 0 0; 
+}
+.post-content { padding: 1.5rem; }
+
+/* ---- Premium Locked Card Style (in More Info Section) ---- */
+.premium-locked {
+    background: var(--bg-sidebar);
+    border: 2px solid var(--accent-warning);
+    text-align: center;
+    cursor: pointer;
+}
+.premium-locked .cta-button {
+    background: var(--accent-warning);
+}
+
+/* ---- NEW: Premium Modal Styles (The Pop-out Window) ---- */
+.modal-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0, 0, 0, 0.6); 
+    z-index: 1000; 
+}
+.premium-modal-content { 
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    background: white; 
+    padding: 2.5rem; 
+    border-radius: 12px; 
+    z-index: 1001; 
+    max-width: 450px; 
+    text-align: center; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.premium-icon {
+    color: var(--accent-blue);
+    margin-bottom: 1rem;
+}
+.close-btn { 
+    position: absolute; 
+    top: 10px; 
+    right: 20px; 
+    font-size: 1.5rem; 
+    cursor: pointer; 
+    color: var(--text-secondary);
+}
+/* ---- Professional Map Popup Styles ---- */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.leaflet-popup-content {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    margin: 10px 15px;
+}
+
+.leaflet-popup-content b {
+    font-family: 'Poppins', sans-serif;
+    color: var(--primary-blue);
+}
+
+.leaflet-popup-tip {
+    box-shadow: none;
+}
+/* --- Map Legend Styles --- */
+.info.legend {
+    padding: 8px 12px;
+    font-family: 'Lato', sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    line-height: 24px;
+    color: #333;
+    font-weight: bold;
+}
+.legend i {
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 8px;
+    opacity: 1;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.2);
+}

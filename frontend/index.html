@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Nirmal Dhara</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-waves">
+        <div class="bubbles">
+            <!-- 20 bubble spans for the animation -->
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo">Nirmal Dhara</div>
+            <ul>
+                <li><a href="#" id="about-link">About Us</a></li>
+                <li><a href="#" id="mission-link">Our Mission</a></li>
+                <li><a href="#" id="contact-link">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="hero-section">
+        <h1>Welcome to Nirmal Dhara</h1>
+        <p>Harnessing Technology to Restore the Sacred Ganga.</p>
+        <button class="cta-button" id="discover-mission-btn">Discover Our Mission</button>
+    </main>
+
+    <!-- Modal Overlay that dims the background -->
+    <div class="modal-overlay" id="modal-overlay"></div>
+
+    <!-- About Us Modal -->
+    <div class="modal" id="about-modal">
+        <span class="close-btn">&times;</span>
+        <h2>About Us</h2>
+        <p>Nirmal Dhara was founded by a collective of environmental engineers, data scientists, and community leaders. We are dedicated to pioneering a new era of river conservation, starting with the sacred Ganga.</p>
+    </div>
+
+    <!-- Simple Text Modal for the "Our Mission" nav link -->
+    <div class="modal" id="mission-text-modal">
+        <span class="close-btn">&times;</span>
+        <h2>Our Mission</h2>
+        <p>Our core mission is to restore the Ganga to its pristine state ('Nirmal Dhara') by integrating cutting-edge technology with community-driven initiatives. We aim to make water quality data transparent and accessible to everyone.</p>
+    </div>
+    
+    <!-- Contact Us Modal -->
+    <div class="modal" id="contact-modal">
+        <span class="close-btn">&times;</span>
+        <h2>Contact Us</h2>
+        <p>We welcome collaborations, inquiries, and volunteers.</p>
+        <ul>
+            <li><strong>Email:</strong> connect@nirmaldhara.tech</li>
+            <li><strong>Office:</strong> Tech Park, Vanasthali, Rajasthan, India</li>
+        </ul>
+    </div>
+
+    <!-- The Role Selection Portal (triggered by the main button) -->
+    <div class="modal" id="role-portal-modal">
+        <span class="close-btn">&times;</span>
+        <h2>Explore Our Mission From Your Perspective</h2>
+        <p class="portal-subtitle">Select a role to see the information most relevant to you.</p>
+        
+        <div class="role-selection-container">
+            <div class="role-card" id="user-role-card">
+                <h3>Community Member</h3>
+                <p>View general updates, our real-world impact, and learn how you can get involved.</p>
+            </div>
+            <div class="role-card" id="ngo-role-card">
+                <h3>NGO / Partner</h3>
+                <p>Access partnership data, collaboration tools, and information on joint initiatives.</p>
+            </div>
+            <div class="role-card" id="expert-role-card">
+                <h3>Expert / Researcher</h3>
+                <p>Dive into in-depth technical data, research papers, and our analysis models.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authentication Modal for Login/Sign Up -->
+    <div class="modal" id="auth-modal">
+        <span class="close-btn">&times;</span>
+        <div class="auth-form-container">
+            <h2 id="auth-title">Login</h2>
+            <form id="auth-form" novalidate>
+                <div class="input-group">
+                    <input type="email" id="email" name="email" required placeholder="Email Address">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" name="password" required placeholder="Password">
+                </div>
+                <div class="input-group" id="confirm-password-group" style="display: none;">
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password">
+                </div>
+                <button type="submit" class="cta-button" id="auth-button">Login</button>
+            </form>
+            <p class="auth-toggle-link">
+                Don't have an account? <a href="#" id="toggle-to-signup">Sign Up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Generic Message Modal -->
+    <div class="modal" id="message-modal">
+        <h2 id="message-title"></h2>
+        <p id="message-text"></p>
+        <button class="cta-button" id="message-ok-btn">OK</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

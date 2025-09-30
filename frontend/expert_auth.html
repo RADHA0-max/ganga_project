@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert Verification - Nirmal Dhara</title>
+    <link rel="stylesheet" href="expert_auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="logo">Nirmal Dhara</div>
+            <h2>Expert Portal Access</h2>
+            <p>To ensure the integrity of our data, please select the qualification that best represents your expertise.</p>
+            
+            <div class="form-group">
+                <label for="verification-method">Select Your Qualification Level</label>
+                <select id="verification-method">
+                    <option value="" selected disabled>Please choose an option...</option>
+                    <option value="undergraduate">Undergraduate Degree</option>
+                    <option value="postgraduate">Postgraduate Degree</option>
+                    <option value="freelancer">Freelancer / Consultant</option>
+                    <option value="no-education">No Formal Education (Experience-Based)</option>
+                </select>
+            </div>
+
+            <!-- Verification Forms (initially hidden) -->
+            <form id="verification-form" class="hidden">
+                <!-- This section is shown for degree/freelancer options -->
+                <div id="document-upload-form" class="form-section hidden">
+                    <label for="document-upload">Upload supporting document (e.g., Degree, Certificate, Portfolio)</label>
+                    <div class="upload-area" id="upload-area">
+                        <p>Click or drag file to this area to upload</p>
+                        <span id="file-name-display">PDF, PNG, JPG up to 5MB</span>
+                        <input type="file" id="document-upload" class="hidden">
+                    </div>
+                </div>
+
+                <!-- This section is shown only when "No Formal Education" is selected -->
+                <div id="experience-form" class="form-section hidden">
+                    <label for="experience-text">Describe your work experience (min. 100 words)</label>
+                    <textarea id="experience-text" rows="6" placeholder="Detail your relevant work history, community-led projects, or other experiences that grant you expertise in this field..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit for Verification</button>
+            </form>
+        </div>
+    </div>
+    <script src="expert_auth.js"></script>
+</body>
+</html>
+
