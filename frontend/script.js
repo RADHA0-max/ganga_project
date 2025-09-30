@@ -118,9 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (password !== confirmPassword) {
                 return showMessage("Error", "Passwords do not match!");
             }
-            endpoint = 'http://localhost:5000/api/auth/register';
+            endpoint = 'https://gange-l27l.onrender.com/api/auth/register';
         } else {
-            endpoint = 'http://localhost:5000/api/auth/login';
+            endpoint = 'https://gange-l27l.onrender.com/api/auth/login';
         }
 
         try {

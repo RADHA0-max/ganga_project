@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchApiData() {
         try {
-            const response = await fetch('http://localhost:5000/api/user-analysis-data');
+            const response = await fetch('https://gange-l27l.onrender.com/api/user-analysis-data');
             if (!response.ok) throw new Error('Network error');
             return await response.json();
         } catch (error) {
