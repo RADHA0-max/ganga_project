@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- ELEMENT SELECTORS ---
     const analysisMenu = document.querySelector('.analysis-menu');
     const portalSections = document.querySelectorAll('.portal-section');
     const analysisTitle = document.getElementById('analysis-title');
@@ -10,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const premiumModal = document.getElementById('premium-modal');
     const closePremiumModal = document.getElementById('close-premium-modal');
     const expertReportLink = document.getElementById('expert-report-link');
+    const lastUpdatedDateElement = document.getElementById('last-updated-date');
     const predictionElements = {
         day1: { date: document.getElementById('day1-date'), prediction: document.getElementById('day1-prediction'), alert: document.getElementById('day1-alert'), alertText: document.getElementById('day1-alert-text') },
         day2: { date: document.getElementById('day2-date'), prediction: document.getElementById('day2-prediction'), alert: document.getElementById('day2-alert'), alertText: document.getElementById('day2-alert-text') },
@@ -19,25 +19,23 @@ document.addEventListener('DOMContentLoaded', () => {
     let barChartInstance, pieChartInstance;
     let map, mapLayers = [];
 
-    // --- PROFESSIONAL MAP LOGIC ---
+    if (lastUpdatedDateElement) {
+        const today = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        lastUpdatedDateElement.textContent = today.toLocaleDateString('en-US', options);
+    }
+
     const riverSegments = [
-        { name: 'Assi Ghat', coords: [[25.2852, 82.9922], [25.2890, 82.9950]] },
-        { name: 'Tulsi Ghat', coords: [[25.2890, 82.9950], [25.2930, 82.9980]] },
-        { name: 'Harishchandra Ghat', coords: [[25.2930, 82.9980], [25.2960, 83.0006]] },
-        { name: 'Kedar Ghat', coords: [[25.2960, 83.0006], [25.3000, 83.0040]] },
-        { name: 'Dashashwamedh Ghat', coords: [[25.3000, 83.0040], [25.3072, 83.0088]] },
-        { name: 'Manikarnika Ghat', coords: [[25.3072, 83.0088], [25.3110, 83.0120]] },
+        { name: 'Assi Ghat', coords: [[25.2852, 82.9922], [25.2890, 82.9950]] }, { name: 'Tulsi Ghat', coords: [[25.2890, 82.9950], [25.2930, 82.9980]] },
+        { name: 'Harishchandra Ghat', coords: [[25.2930, 82.9980], [25.2960, 83.0006]] }, { name: 'Kedar Ghat', coords: [[25.2960, 83.0006], [25.3000, 83.0040]] },
+        { name: 'Dashashwamedh Ghat', coords: [[25.3000, 83.0040], [25.3072, 83.0088]] }, { name: 'Manikarnika Ghat', coords: [[25.3072, 83.0088], [25.3110, 83.0120]] },
         { name: 'Raj Ghat', coords: [[25.3110, 83.0120], [25.3215, 83.0250]] }
     ];
 
     function initializeMap() {
-        if (map) return; // Prevents re-initializing the map
+        if (map) return;
         map = L.map('map').setView([25.30, 83.00], 13);
-        
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' }).addTo(map);
         const legend = L.control({ position: 'bottomright' });
         legend.onAdd = function (map) {
             const div = L.DomUtil.create('div', 'info legend');
@@ -47,9 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { status: 'danger', color: '#FF4136', label: 'Heavy Alert' }
             ];
             div.innerHTML += '<h4>River Status</h4>';
-            for (let i = 0; i < grades.length; i++) {
-                div.innerHTML += `<i style="background:${grades[i].color}"></i> ${grades[i].label}<br>`;
-            }
+            for (let i = 0; i < grades.length; i++) { div.innerHTML += `<i style="background:${grades[i].color}"></i> ${grades[i].label}<br>`; }
             return div;
         };
         legend.addTo(map);
@@ -119,9 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     async function fetchAndDisplayChartData(analysisType) {
-        // FIXED: The map is now initialized here, only when it's needed
         initializeMap();
-
         const data = await fetchApiData();
         if (!data || !data[analysisType]) {
             analysisTitle.textContent = "Data not available";
@@ -166,24 +160,19 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const pred = predictions[index];
                 const elements = predictionElements[day];
-                if (!pred || !elements.prediction || !pred.triggeredAlerts) {
-                    throw new Error(`Prediction data for ${day} is missing or malformed.`);
-                }
+                if (!pred || !elements.prediction || !pred.triggeredAlerts) { throw new Error(`Prediction data for ${day} is missing or malformed.`); }
                 
                 const date = new Date();
                 date.setDate(date.getDate() + index + 1);
-                elements.date.textContent = date.toLocaleDateString('en-US', { weekday: 'long' });
+                elements.date.textContent = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
 
                 const relevantAlert = pred.triggeredAlerts.find(a => a.metric === analysisType);
                 const baseText = predictionTextMap[analysisType] || 'Overall water quality is predicted to be';
-                
                 const metricDetails = metricDetailsMap[analysisType];
                 let predictedValueText = '';
                 if (metricDetails && pred.predictedValues) {
                     const value = pred.predictedValues[metricDetails.key];
-                    if (value !== undefined) {
-                        predictedValueText = ` (Predicted: ${value} ${metricDetails.unit})`;
-                    }
+                    if (value !== undefined) { predictedValueText = ` (Predicted: ${value} ${metricDetails.unit})`; }
                 }
                 
                 elements.alert.className = 'alert';
@@ -217,7 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
     expertReportLink.addEventListener('click', () => togglePremiumModal(true));
     closePremiumModal.addEventListener('click', () => togglePremiumModal(false));
     premiumModalOverlay.addEventListener('click', () => togglePremiumModal(false));
-
-    // FIXED: Map initialization is moved from here to where it's needed
+    
     fetchAndDisplayChartData('fecal_coliform');
 });

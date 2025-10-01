@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- ELEMENT SELECTORS (Cleaned up) ---
     const analysisMenu = document.querySelector('.analysis-menu');
     const analysisResults = document.getElementById('analysis-results');
     const updateDataForm = document.getElementById('update-data-form');
@@ -8,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const analysisTitle = document.getElementById('analysis-title');
     const barChartCanvas = document.getElementById('bar-chart');
     const pieChartCanvas = document.getElementById('pie-chart');
+    const lastUpdatedDateElement = document.getElementById('last-updated-date');
     const predictionElements = {
         day1: { date: document.getElementById('day1-date'), prediction: document.getElementById('day1-prediction'), alert: document.getElementById('day1-alert'), alertText: document.getElementById('day1-alert-text') },
         day2: { date: document.getElementById('day2-date'), prediction: document.getElementById('day2-prediction'), alert: document.getElementById('day2-alert'), alertText: document.getElementById('day2-alert-text') },
@@ -17,7 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let barChartInstance, pieChartInstance;
     let map, mapLayers = [];
 
-    // --- MAP LOGIC ---
+    if (lastUpdatedDateElement) {
+        const today = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        lastUpdatedDateElement.textContent = today.toLocaleDateString('en-US', options);
+    }
+
     const riverSegments = [
         { name: 'Assi Ghat', coords: [[25.2852, 82.9922], [25.2890, 82.9950]] }, { name: 'Tulsi Ghat', coords: [[25.2890, 82.9950], [25.2930, 82.9980]] },
         { name: 'Harishchandra Ghat', coords: [[25.2930, 82.9980], [25.2960, 83.0006]] }, { name: 'Kedar Ghat', coords: [[25.2960, 83.0006], [25.3000, 83.0040]] },
@@ -28,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function initializeMap() {
         if (map) return;
         map = L.map('map').setView([25.30, 83.00], 13);
+        
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
@@ -94,27 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- NEW, MORE ROBUST showSection FUNCTION ---
-    function showSection(sectionId) {
-        // First, hide all direct div sections within the main content area
-        const allSections = document.querySelectorAll('.portal-main-content > div');
-        allSections.forEach(section => {
-            section.classList.add('hidden');
-        });
-
-        // Then, find the specific section to show and remove the 'hidden' class
-        const sectionToShow = document.getElementById(sectionId);
-        if (sectionToShow) {
-            sectionToShow.classList.remove('hidden');
-        }
-    }
-
     const generateDailyDataForm = () => {
-        const last10Days = Array.from({ length: 10 }, (_, i) => {
-            const d = new Date();
-            d.setDate(d.getDate() - i);
-            return d;
-        }).reverse();
+        const last10Days = Array.from({ length: 10 }, (_, i) => { const d = new Date(); d.setDate(d.getDate() - i); return d; }).reverse();
         const metrics = [
             { id: 'fecal_coliform', name: 'Fecal Coliform (MPN)' }, { id: 'bod', name: 'BOD (mg/L)' },
             { id: 'nitrate', name: 'Nitrate (mg/L)' }, { id: 'flow', name: 'Flow (m³/s)' },
@@ -131,17 +118,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             formHTML += `</fieldset>`;
         });
-        if (dailyDataFormContainer) {
-            dailyDataFormContainer.innerHTML = formHTML;
-        }
+        if (dailyDataFormContainer) { dailyDataFormContainer.innerHTML = formHTML; }
     };
-
-    updateDataForm.addEventListener('submit', (e) => { 
-        e.preventDefault(); 
-        alert('Data submitted for review!'); 
-        showSection('my-dashboard-section'); 
-    });
-
+    
+    updateDataForm.addEventListener('submit', (e) => { e.preventDefault(); alert('Data submitted for review!'); showSection('my-dashboard-section'); });
+    
+    function showSection(sectionId) {
+        const allSections = document.querySelectorAll('.portal-main-content > div');
+        allSections.forEach(section => section.classList.add('hidden'));
+        const sectionToShow = document.getElementById(sectionId);
+        if (sectionToShow) sectionToShow.classList.remove('hidden');
+    }
+    
     analysisMenu.addEventListener('click', (e) => {
         const targetLi = e.target.closest('li');
         if (!targetLi || !targetLi.dataset.analysis) return;
@@ -151,16 +139,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (analysisType === 'my-dashboard') showSection('my-dashboard-section');
         else { showSection('analysis-results'); fetchAndDisplayChartData(analysisType); }
     });
-
+    
     document.querySelectorAll('.dashboard-button').forEach(button => {
         button.addEventListener('click', () => {
             const sectionId = button.dataset.section;
-            if (sectionId) { 
-                showSection(sectionId); 
-                if (sectionId === 'update-data-section') {
-                    generateDailyDataForm();
-                }
-            }
+            if (sectionId) { showSection(sectionId); if (sectionId === 'update-data-section') generateDailyDataForm(); }
         });
     });
     
@@ -212,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const date = new Date();
                 date.setDate(date.getDate() + index + 1);
-                elements.date.textContent = date.toLocaleDateString('en-US', { weekday: 'long' });
+                elements.date.textContent = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
                 
                 const relevantAlert = pred.triggeredAlerts.find(a => a.metric === analysisType);
                 const baseText = predictionTextMap[analysisType] || 'Overall water quality is predicted to be';
@@ -246,6 +229,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // INITIAL LOAD
     showSection('my-dashboard-section');
 });

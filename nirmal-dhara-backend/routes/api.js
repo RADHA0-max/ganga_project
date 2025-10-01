@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const WaterData = require('../models/waterData');
 
-// This function is now updated to simulate ALL metrics, including Rainfall and Temperature
+// This helper function now creates detailed, specific alerts for the frontend
 const simulatePrediction = (baselineData) => {
     const predictions = [];
     
@@ -14,7 +14,6 @@ const simulatePrediction = (baselineData) => {
             nitrate: parseFloat((baselineData.nitrate + randomness * (i * 2.0)).toFixed(1)),
             flow: parseFloat((baselineData.flow + randomness * (i * 150)).toFixed(0)),
             bod: parseFloat((baselineData.bod + (Math.random() - 0.4) * (i * 1.5)).toFixed(1)),
-            // FIXED: Added simulation for rainfall and temperature
             rainfall: parseFloat(Math.max(0, baselineData.rainfall + (Math.random() - 0.6) * (i * 5)).toFixed(1)),
             temperature: parseFloat((baselineData.temperature + randomness * (i * 0.5)).toFixed(1))
         };
@@ -64,17 +63,15 @@ router.get('/user-analysis-data', async (req, res) => {
         for (const metric of metrics) {
             const dataKey = metric === 'level' ? 'water_level' : metric;
             
-            const historicalData = Array.from({ length: 10 }, () => 
-                baselineData[dataKey] * (1 + (Math.random() - 0.5) * 0.2)
-            ).map(val => parseFloat(val.toFixed(1)));
+            const todaysData = parseFloat((baselineData[dataKey] * (1 + (Math.random() - 0.5) * 0.2)).toFixed(1));
 
             responseData[metric] = {
                 title: titles[metric],
                 chartData: {
                     bar: { 
-                        labels: Array.from({ length: 10 }, (_, i) => `Day ${i - 9}`),
+                        labels: ['Today'], 
                         label: titles[metric].split('(')[1].replace(')',''), 
-                        data: historicalData 
+                        data: [todaysData]
                     },
                     pie: { 
                         labels: ['Safe', 'Warning', 'Danger'], 

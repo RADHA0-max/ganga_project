@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pieChartCanvas = document.getElementById('pie-chart');
     const createPostForm = document.getElementById('create-post-form');
     const myPostsContainer = document.getElementById('my-posts-container');
+    const lastUpdatedDateElement = document.getElementById('last-updated-date');
     const predictionElements = {
         day1: { date: document.getElementById('day1-date'), prediction: document.getElementById('day1-prediction'), alert: document.getElementById('day1-alert'), alertText: document.getElementById('day1-alert-text') },
         day2: { date: document.getElementById('day2-date'), prediction: document.getElementById('day2-prediction'), alert: document.getElementById('day2-alert'), alertText: document.getElementById('day2-alert-text') },
@@ -17,6 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let barChartInstance, pieChartInstance;
     let map, mapLayers = [];
+
+    if (lastUpdatedDateElement) {
+        const today = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        lastUpdatedDateElement.textContent = today.toLocaleDateString('en-US', options);
+    }
 
     const riverSegments = [
         { name: 'Assi Ghat', coords: [[25.2852, 82.9922], [25.2890, 82.9950]] }, { name: 'Tulsi Ghat', coords: [[25.2890, 82.9950], [25.2930, 82.9980]] },
@@ -135,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     async function fetchAndDisplayChartData(analysisType) {
-        initializeMap(); // FIXED: Map is now initialized here
+        initializeMap();
         const data = await fetchApiData();
         if (!data || !data[analysisType]) {
             analysisTitle.textContent = "Data not available";
@@ -182,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const date = new Date();
                 date.setDate(date.getDate() + index + 1);
-                elements.date.textContent = date.toLocaleDateString('en-US', { weekday: 'long' });
+                elements.date.textContent = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
 
                 const relevantAlert = pred.triggeredAlerts.find(a => a.metric === analysisType);
                 const baseText = predictionTextMap[analysisType] || 'Overall water quality is predicted to be';
@@ -216,7 +223,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // FIXED: Map initialization moved from here
     if(createPostForm) createPostForm.addEventListener('submit', handlePostSubmission);
     const initialActiveLink = document.querySelector('.analysis-menu li.active');
     if (initialActiveLink) {
