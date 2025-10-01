@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const WaterData = require('../models/waterData');
 
-// This helper function now creates detailed, specific alerts for the frontend
 const simulatePrediction = (baselineData) => {
     const predictions = [];
     
@@ -63,15 +62,25 @@ router.get('/user-analysis-data', async (req, res) => {
         for (const metric of metrics) {
             const dataKey = metric === 'level' ? 'water_level' : metric;
             
-            const todaysData = parseFloat((baselineData[dataKey] * (1 + (Math.random() - 0.5) * 0.2)).toFixed(1));
+            // --- FIXED: This now generates the past 10 days of data again ---
+            const historicalData = Array.from({ length: 10 }, (_, i) => 
+                baselineData[dataKey] * (1 + (Math.random() - 0.5) * (0.2 + (i * 0.02))) // Fluctuation increases slightly for older data
+            ).map(val => parseFloat(val.toFixed(1)));
+
+            // --- FIXED: Create labels for the last 10 days ---
+            const historicalLabels = Array.from({ length: 10 }, (_, i) => {
+                const date = new Date();
+                date.setDate(date.getDate() - (9 - i));
+                return date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }); // e.g., "30 Sep"
+            });
 
             responseData[metric] = {
                 title: titles[metric],
                 chartData: {
                     bar: { 
-                        labels: ['Today'], 
+                        labels: historicalLabels, 
                         label: titles[metric].split('(')[1].replace(')',''), 
-                        data: [todaysData]
+                        data: historicalData
                     },
                     pie: { 
                         labels: ['Safe', 'Warning', 'Danger'], 
